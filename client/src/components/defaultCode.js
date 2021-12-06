@@ -1,6 +1,6 @@
 const defaultCode = {};
 
-defaultCode.clike = `#include<stdio>
+defaultCode.clike = `
 #include<iostream>
 
 using namespace std;
