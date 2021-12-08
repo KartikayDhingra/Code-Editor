@@ -1,11 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
-const { generateCode } = require("./generateCode");
-const { runCpp } = require("./runCpp");
-const { runPy } = require("./runPy");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
+
+app.get("/run", (req, res) => {
+  return res.status(200).json("Hello");
+})
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

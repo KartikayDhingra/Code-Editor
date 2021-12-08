@@ -11,8 +11,9 @@ const CodeBox = () => {
   const [theme, setTheme] = useState("dracula");
   const [status, setStatus] = useState("");
   const [runStatus, setRunStatus] = useState("NA");
-  const [runtime, setRuntime] = useState("0 ms");
+  const [runtime, setRuntime] = useState("0 sec");
   const [memoryUsed, setMemoryUsed] = useState("0 Kb");
+  const [result, setResult] = useState("");
 
   const notifyCompleted = () => {
     toast.success("Completed successfully", {
@@ -66,7 +67,11 @@ const CodeBox = () => {
         },
       }
     );
+    setResult("");
     setStatus("Running...");
+    setRunStatus("NA");
+    setRuntime("0 sec");
+    setMemoryUsed("0 Kb");
     // console.log(output);
     const statusUpdateUrl = output.data.status_update_url;
     const intervalId = setInterval(async () => {
@@ -77,13 +82,20 @@ const CodeBox = () => {
       });
       // const {status : status_code, time_used, memory_used} = status.data.result.runStatus;
       if (status.data.request_status.code === "REQUEST_COMPLETED") {
-        const {status : status_code, time_used, memory_used} = status.data.result.run_status;
+        const {
+          status: status_code,
+          time_used,
+          memory_used,
+          output,
+        } = status.data.result.run_status;
         setStatus("Completed");
         clearInterval(intervalId);
         notifyCompleted();
         setRunStatus(`${status_code}CEPTED`);
-        setRuntime(`${time_used} ms`);
+        setRuntime(`${time_used} sec`);
         setMemoryUsed(`${memory_used} Kb`);
+        const result = await axios.get(output);
+        setResult(result.data);
         console.log(status);
       }
     }, 500);
@@ -171,24 +183,52 @@ const CodeBox = () => {
         </div>
         <div className="w-1/2 h-full flex flex-col">
           <div className="flex items-center justify-between px-6 py-2">
-            <div className="bg-white bg-opacity-20 text-gray-900">
-              Output
+            <div className="bg-white bg-opacity-20 text-gray-900">Output</div>
+            <div className="text-gray-500 text-sm">
+              Status :{" "}
+              <span
+                className={`${
+                  status === "Completed" ? "text-green-600" : "text-yellow-500"
+                } text-yellow-500 text-xs`}
+              >
+                {runStatus}
+              </span>
             </div>
-            <div className="text-gray-500 text-sm">Status : <span className="text-green-600 text-xs">{runStatus}</span></div>
-            <div className="text-gray-500 text-sm">Runtime : <span className="text-green-600 text-xs">{runtime}</span></div>
-            <div className="text-gray-500 text-sm">Memory Used : <span className="text-green-600 text-xs">{memoryUsed}</span></div>
+            <div className="text-gray-500 text-sm">
+              Runtime :{" "}
+              <span
+                className={`${
+                  status === "Completed" ? "text-green-600" : "text-yellow-500"
+                } text-yellow-500 text-xs`}
+              >
+                {runtime}
+              </span>
+            </div>
+            <div className="text-gray-500 text-sm">
+              Memory Used :{" "}
+              <span
+                className={`${
+                  status === "Completed" ? "text-green-600" : "text-yellow-500"
+                } text-yellow-500 text-xs`}
+              >
+                {memoryUsed}
+              </span>
+            </div>
           </div>
           <div className="w-full h-full bg-white">
-            <div
-              className={`h-full flex items-center justify-center text-2xl ${
-                status === "Completed" ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {status === "Running..." && (
-                <CgSpinner size={20} className="mr-3 animate-spin" />
-              )}
-              {status}
-            </div>
+            {result.length == 0 && (
+              <div
+                className={`h-full flex items-center justify-center text-2xl ${
+                  status === "Completed" ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {status === "Running..." && (
+                  <CgSpinner size={20} className="mr-3 animate-spin" />
+                )}
+                {status === "Running..." && status}
+              </div>
+            )}
+            <div className="px-4 py-4">{result}</div>
           </div>
         </div>
       </div>
