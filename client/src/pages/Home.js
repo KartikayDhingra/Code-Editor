@@ -1,13 +1,14 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import CodeBox from "../components/CodeBox";
+import FullScreen from "../components/FullScreen";
 
 const Home = () => {
   return (
-    <React.Fragment>
+    <FullScreen>
       <Navbar />
       <CodeBox />
-    </React.Fragment>
+    </FullScreen>
   );
 };
 

@@ -14,6 +14,7 @@ const CodeBox = () => {
   const [runtime, setRuntime] = useState("0 sec");
   const [memoryUsed, setMemoryUsed] = useState("0 Kb");
   const [result, setResult] = useState("");
+  const [input, setInput] = useState("");
 
   const notifyCompleted = () => {
     toast.success("Completed successfully", {
@@ -50,7 +51,7 @@ const CodeBox = () => {
   const reqBody = {
     lang: setLanguageVersion(),
     source: languageCode,
-    input: "",
+    input: input,
     memory_limit: 243232,
     time_limit: 5,
     callback: "https://client.com/callback/",
@@ -100,6 +101,10 @@ const CodeBox = () => {
       }
     }, 500);
   };
+
+  const changeInputHandler = (event) => {
+    setInput(event.target.value);
+  }
 
   return (
     <div className="mt-10">
@@ -179,7 +184,7 @@ const CodeBox = () => {
           <h2 className="px-6 py-2 bg-white bg-opacity-20 text-gray-900">
             Input
           </h2>
-          <textarea className="w-full h-full"></textarea>
+          <textarea onChange={changeInputHandler} className="w-full h-full px-4 py-4 focus:outline-none" value={input} placeholder="Enter Input"></textarea>
         </div>
         <div className="w-1/2 h-full flex flex-col">
           <div className="flex items-center justify-between px-6 py-2">
@@ -216,14 +221,14 @@ const CodeBox = () => {
             </div>
           </div>
           <div className="w-full h-full bg-white">
-            {result.length == 0 && (
-              <div
-                className={`h-full flex items-center justify-center text-2xl ${
-                  status === "Completed" ? "text-green-500" : "text-red-500"
+            {result.length === 0 &&
+              (<div
+                className={`flex items-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-3xl ${
+                  status === "Completed" ? "text-green-500" : "text-yellow-500"
                 }`}
               >
                 {status === "Running..." && (
-                  <CgSpinner size={20} className="mr-3 animate-spin" />
+                  <CgSpinner size={24} className="mr-3 animate-spin" />
                 )}
                 {status === "Running..." && status}
               </div>
