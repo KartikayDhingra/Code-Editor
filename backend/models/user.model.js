@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const passportLocalMongoose = require("passport-local-mongoose");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -27,6 +28,12 @@ const UserSchema = new Schema({
 }, {
     timestamps: true,
 })
+
+UserSchema.plugin(passportLocalMongoose);
+UserSchema.methods.validPassword = function( pwd ) {
+    // EXAMPLE CODE!
+    return ( this.password === pwd );
+};
 
 const User = mongoose.model("User", UserSchema);
 

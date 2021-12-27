@@ -14,7 +14,7 @@ const Navbar = () => {
           <NavLink
             to="/"
             exact
-            activeClassName="text-yellow-500"
+            activeClassName="text-yellow-500 border-b border-yellow-300"
             className="px-1.5 py-1.5 text-gray-800 hover:text-yellow-500"
           >
             Home
@@ -23,7 +23,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/codepen"
-            activeClassName="text-yellow-500"
+            activeClassName="text-yellow-500 border-b border-yellow-300"
             className="px-1.5 py-1.5 text-gray-800 hover:text-yellow-500"
           >
             Codepair
@@ -32,7 +32,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/algorithms"
-            activeClassName="text-yellow-500"
+            activeClassName="text-yellow-500 border-b border-yellow-300"
             className="px-1.5 py-1.5 text-gray-800 hover:text-yellow-500"
           >
             Algorithms
@@ -42,8 +42,8 @@ const Navbar = () => {
           {ctx.userInfo === null ? (
             <NavLink
               to="/signup"
-              // activeClassName="text-yellow-500"
-              className="px-4 py-1.5 rounded-2xl text-sm bg-yellow-400 text-white hover:bg-opacity-80"
+              activeClassName="transform scale-110"
+              className="px-4 py-1.5 inline-block rounded-2xl text-sm bg-yellow-400 text-white hover:bg-opacity-80"
             >
               Sign up
             </NavLink>

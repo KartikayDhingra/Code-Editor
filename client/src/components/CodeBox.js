@@ -27,6 +27,17 @@ const CodeBox = () => {
   };
 
   useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
+
+  useEffect(() => {
     setLanguageCode(defaultCode[language]);
   }, [language]);
 
