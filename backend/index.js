@@ -78,6 +78,11 @@ app.get("/userInfo", isLogged, (req, res) => {
   // res.redirect("http://localhost:3000");
 });
 
+app.get("/logout", isLogged, (req,res) => {
+    req.logout();
+    res.redirect('http://localhost:3000');
+})
+
 app.listen("5000", (req, res) => {
   console.log("Server running at port 5000");
 });
