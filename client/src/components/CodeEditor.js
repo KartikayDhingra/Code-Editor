@@ -17,6 +17,7 @@ import "codemirror/mode/go/go";
 import 'codemirror/addon/lint/javascript-lint';
 import 'codemirror/addon/lint/lint.js';
 import 'codemirror/addon/hint/javascript-hint';
+import "../App.css"
 import { JSHINT } from 'jshint';
 window.JSHINT = JSHINT;
 
@@ -34,9 +35,9 @@ const CodeEditor = (props) => {
 
   return (
     <React.Fragment>
-        <div className="border-2 border-gray-400">
         <CodeMirror
           value={value}
+          className="h-full"
           options={{
             lineWrapping: true,
             lint: true,
@@ -47,7 +48,6 @@ const CodeEditor = (props) => {
           onBeforeChange={beforeChangeHandler}
           onChange={onChangeHandler}
         />
-        </div>
     </React.Fragment>
   );
 };

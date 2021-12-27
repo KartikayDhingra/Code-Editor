@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.CodeMirror{
+  height: 100%;
+  overflow-y: hidden;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

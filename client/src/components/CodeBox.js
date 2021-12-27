@@ -4,6 +4,10 @@ import defaultCode from "./defaultCode";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { CgSpinner } from "react-icons/cg";
+import { BsFillPlayFill } from "react-icons/bs";
+import { FiCopy } from "react-icons/fi";
+import { MdOutlineSaveAlt } from "react-icons/md";
+// import useLocalStorage from "../hooks/useLocalStorage";
 
 const CodeBox = () => {
   const [languageCode, setLanguageCode] = useState("");
@@ -104,82 +108,164 @@ const CodeBox = () => {
 
   const changeInputHandler = (event) => {
     setInput(event.target.value);
+  };
+
+  const copyToClipboardHandler = () => {
+    navigator.clipboard.writeText(languageCode);
+    toast.success("Copied to clipboard", {
+      id: "success123",
+    });
   }
 
   return (
-    <div className="mt-10">
+    <div className="h-full">
       <Toaster />
-      <div className="flex items-center justify-between w-1/2 mb-4 px-6">
-        <div>
-          <label
-            htmlFor="language"
-            className="mr-2 text-xs font-bold text-gray-500"
-          >
-            Languague :{" "}
-          </label>
-          <select
-            name="language"
-            id="language"
-            onChange={languageChangeHandler}
-            className="bg-purple-600 font-normal text-sm text-white ring ring-purple-600 ring-offset-4 ring-offset-purple-100 focus:outline-none rounded px-1.5 py-1"
-          >
-            <option value="clike" className="rounded">
-              C++
-            </option>
-            <option value="java">Java</option>
-            <option value="python">Python</option>
-            <option value="javascript">Javascript</option>
-            <option value="go">Go</option>
-          </select>
-        </div>
-        <div className="">
-          <button
-            onClick={clickRunHandler}
-            className="flex items-center justify-between bg-green-600 font-normal text-sm text-white ring ring-green-600 ring-offset-4 ring-offset-green-100 focus:outline-none rounded px-3 py-1"
-          >
-            Run
-          </button>
-        </div>
-        <div className="">
-          <button className="bg-purple-600 font-normal text-sm text-white ring ring-purple-600 ring-offset-4 ring-offset-purple-100 focus:outline-none rounded px-3 py-1">
-            Save
-          </button>
-        </div>
-        <div className="">
-          <button className="bg-purple-600 font-normal text-sm text-white ring ring-purple-600 ring-offset-4 ring-offset-purple-100 focus:outline-none rounded px-3 py-1">
-            Copy
-          </button>
-        </div>
-        <div className="">
-          <label
-            htmlFor="themes"
-            className="mr-2 text-xs font-bold text-gray-500"
-          >
-            Themes :{" "}
-          </label>
-          <select
-            name="themes"
-            id="themes"
-            onChange={themeChangeHandler}
-            className="bg-purple-600 font-normal text-sm text-white ring ring-purple-600 ring-offset-4 ring-offset-purple-100 focus:outline-none rounded px-1.5 py-1"
-          >
-            <option value="dracula" className="rounded">
-              Dracula
-            </option>
-            <option value="ayu-dark">ayu-dark</option>
-            <option value="base16-light">base16-light</option>
-            <option value="eclipse">eclipse</option>
-          </select>
+      <div className="px-12 py-4">
+        <div className="flex items-center justify-between w-1/2">
+          <div>
+            <select
+              name="language"
+              id="language"
+              onChange={languageChangeHandler}
+              className="bg-purple-600 font-normal text-sm text-white focus:outline-none rounded px-4 py-1.5"
+            >
+              <option value="clike" className="rounded">
+                C++
+              </option>
+              <option value="java">Java</option>
+              <option value="python">Python</option>
+              <option value="javascript">Javascript</option>
+              <option value="go">Go</option>
+            </select>
+          </div>
+          <div className="">
+            <button className="bg-purple-600 flex justify-between items-center font-normal text-sm text-white focus:outline-none rounded px-4 py-1.5">
+              <MdOutlineSaveAlt size={20} className="mr-2" />
+              Save
+            </button>
+          </div>
+          <div className="">
+            <button onClick={copyToClipboardHandler} className="bg-purple-600 flex justify-between items-center font-normal text-sm text-white focus:outline-none rounded px-4 py-1.5">
+              <FiCopy size={20} className="mr-2"/>
+              Copy
+            </button>
+          </div>
+          <div className="">
+            <select
+              name="themes"
+              id="themes"
+              onChange={themeChangeHandler}
+              className="bg-purple-600 font-normal text-sm text-white focus:outline-none rounded px-4 py-1.5"
+            >
+              <option value="dracula" className="rounded">
+                Dracula
+              </option>
+              <option value="ayu-dark">ayu-dark</option>
+              <option value="base16-light">base16-light</option>
+              <option value="eclipse">eclipse</option>
+            </select>
+          </div>
+          <div className="">
+            <button
+              onClick={clickRunHandler}
+              className="flex items-center justify-between bg-green-600 font-normal text-sm text-white focus:outline-none rounded px-4 py-1.5"
+            >
+              <BsFillPlayFill size={20} className="mr-1" />
+              Run
+            </button>
+          </div>
         </div>
       </div>
 
-      <CodeEditor
+      <div className="h-full flex">
+        <div className="h-full w-3/5 border-2 border-l-0 border-gray-300">
+          <CodeEditor
+            language={language}
+            value={languageCode}
+            onChange={onCodeChangeHandler}
+            theme={theme}
+          />
+        </div>
+        <div className="w-2/5 h-full flex flex-col">
+          <div className="w-full h-2/3 border-t border-gray-300 flex flex-col">
+            <h2 className="px-6 py-2 bg-white bg-opacity-20 text-gray-900">
+              Input
+            </h2>
+            <textarea
+              onChange={changeInputHandler}
+              className="w-full h-full px-4 py-4 focus:outline-none"
+              value={input}
+              placeholder="Enter Input"
+            ></textarea>
+          </div>
+          <div className="w-full h-full flex flex-col">
+            <div className="flex items-center justify-between px-6 py-2">
+              <div className="bg-white bg-opacity-20 text-gray-900">Output</div>
+              <div className="text-gray-500 text-sm">
+                Status :{" "}
+                <span
+                  className={`${
+                    status === "Completed"
+                      ? "text-green-600"
+                      : "text-yellow-500"
+                  } text-yellow-500 text-xs`}
+                >
+                  {runStatus}
+                </span>
+              </div>
+              <div className="text-gray-500 text-sm">
+                Runtime :{" "}
+                <span
+                  className={`${
+                    status === "Completed"
+                      ? "text-green-600"
+                      : "text-yellow-500"
+                  } text-yellow-500 text-xs`}
+                >
+                  {runtime}
+                </span>
+              </div>
+              <div className="text-gray-500 text-sm">
+                Memory Used :{" "}
+                <span
+                  className={`${
+                    status === "Completed"
+                      ? "text-green-600"
+                      : "text-yellow-500"
+                  } text-yellow-500 text-xs`}
+                >
+                  {memoryUsed}
+                </span>
+              </div>
+            </div>
+            <div className="w-full h-full bg-white">
+              {result.length === 0 && (
+                <div
+                  className={`flex items-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-3xl ${
+                    status === "Completed"
+                      ? "text-green-500"
+                      : "text-yellow-500"
+                  }`}
+                >
+                  {status === "Running..." && (
+                    <CgSpinner size={24} className="mr-3 animate-spin" />
+                  )}
+                  {status === "Running..." && status}
+                </div>
+              )}
+              <div className="px-4 py-4">{result}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <CodeEditor
         language={language}
         value={languageCode}
         onChange={onCodeChangeHandler}
         theme={theme}
-      />
-      <div className="h-64 flex items-center justify-between bg-gray-200">
+      /> */}
+      {/* <div className="h-64 flex items-center justify-between bg-gray-200">
         <div className="w-1/2 h-full border-r border-gray-300 flex flex-col">
           <h2 className="px-6 py-2 bg-white bg-opacity-20 text-gray-900">
             Input
@@ -236,7 +322,7 @@ const CodeBox = () => {
             <div className="px-4 py-4">{result}</div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
