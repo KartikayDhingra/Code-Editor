@@ -3,6 +3,10 @@ import { NavLink } from "react-router-dom";
 import AuthContext from "../store/auth-context";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { FiSettings } from "react-icons/fi";
+import { FiCode } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 
 const Navbar = () => {
   const ctx = useContext(AuthContext);
@@ -50,7 +54,7 @@ const Navbar = () => {
             <NavLink
               to="/signup"
               activeClassName="transform scale-110"
-              className="px-4 py-1.5 inline-block rounded-2xl text-sm bg-yellow-400 text-white hover:bg-opacity-80"
+              className="px-4 py-1 inline-block rounded-3xl text-sm bg-yellow-400 border-2 border-transparent text-white hover:bg-white hover:border-yellow-400 hover:text-yellow-400"
             >
               Sign up
             </NavLink>
@@ -65,29 +69,33 @@ const Navbar = () => {
                 <RiArrowDropDownLine size={24} />
               </button>
               {dropdownOpen && (
-                <div className="w-full rounded-lg flex flex-col border-2 border-gray-300 absolute top-12 shadow-xl">
+                <div className="w-40 rounded-lg flex flex-col border-2 border-gray-300 absolute top-12 shadow-xl">
                   <a
                     href="/"
-                    className="px-3 text-sm py-1.5 border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
+                    className="px-3 text-sm py-2 flex items-center border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
                   >
+                    <FiUser size={16} className="mr-2" />
                     Profile
                   </a>
                   <a
-                    href="/"
-                    className="px-3 text-sm py-1.5 border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
+                    href="/saved-codes"
+                    className="px-3 text-sm py-2 flex items-center border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
                   >
+                    <FiCode size={16} className="mr-2" />
                     Saved codes
                   </a>
                   <a
                     href="/"
-                    className="px-3 text-sm py-1.5 border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
+                    className="px-3 text-sm py-2 flex items-center border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
                   >
+                    <FiSettings size={16} className="mr-2" />
                     Settings
                   </a>
                   <a
                     href="http://localhost:5000/logout"
-                    className="px-3 text-sm py-1.5 border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
+                    className="px-3 text-sm py-2 flex items-center border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
                   >
+                    <FiLogOut size={16} className="mr-2" />
                     Logout
                   </a>
                 </div>

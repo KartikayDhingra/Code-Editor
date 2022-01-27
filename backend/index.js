@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
-// const isLogged = require("./isLogged");
+const isLogged = require("./isLogged");
 require("./auth");
 
 const app = express();
@@ -34,6 +34,9 @@ mongoose
 
 const userRouter = require("./Router/User/user.router");
 app.use("/users", userRouter);
+
+const codeRouter = require("./Router/Code/code.router");
+app.use("/save", codeRouter);
 
 // const googleAuthRouter = require("./Router/GoogleAuth/google-auth");
 // app.use('/auth/google', googleAuthRouter);
@@ -64,14 +67,6 @@ app.get(
     res.redirect("http://localhost:3000");
   }
 );
-
-const isLogged = (req, res, next) => {
-  if (req.user) {
-    next();
-  } else {
-    res.sendStatus(401);
-  }
-};
 
 app.get("/userInfo", isLogged, (req, res) => {
   res.send(req.user);

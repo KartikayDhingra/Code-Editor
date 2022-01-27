@@ -4,6 +4,8 @@ import Signup from "./pages/Signup";
 import { Route } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "./store/auth-context";
+import SavedCodes from "./pages/SavedCodes";
+import UnAuthorisedError from "./pages/UnAuthorisedError";
 
 function App() {
 
@@ -25,6 +27,7 @@ function App() {
     <AuthContext.Provider value={{userInfo : userInfo}}>
       <Route path="/" exact component={Home} />
       <Route path="/signup" component={Signup} />
+      <Route path="/saved-codes" component={userInfo !== null && SavedCodes} />
     </AuthContext.Provider>
   );
 }
