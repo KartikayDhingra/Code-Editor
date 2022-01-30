@@ -10,7 +10,7 @@ const CodeSchema = new Schema({
         type: String,
         required: true
     },
-    fileName: {
+    filename: {
         type: String,
         required: true
     },

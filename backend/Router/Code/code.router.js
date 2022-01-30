@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Code = require("../../models/code.model");
+const bodyParser = require("body-parser");
 const isLogged = require("../../islogged");
-
+router.use(bodyParser.json());
 // const newUser = new User({
 //     username: "Kartikd23",
 //     password: "123456",
@@ -25,11 +26,11 @@ router.get("/saved-codes", (req,res) => {
 });
 
 router.post("/", (req,res) => {
-    const {userId, code, fileName, language} = req.body;
+    const {userId, code, filename, language} = req.body;
     const newCode = new Code({
         userId : userId,
         code : code,
-        fileName : fileName,
+        filename : filename,
         language : language
     });
     newCode.save().then(() => {

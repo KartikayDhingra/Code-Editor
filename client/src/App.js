@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "./store/auth-context";
 import SavedCodes from "./pages/SavedCodes";
-import UnAuthorisedError from "./pages/UnAuthorisedError";
+// import UnAuthorisedError from "./pages/UnAuthorisedError";
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
     axios
       .get("http://localhost:5000/userInfo", { withCredentials: true })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setUserInfo(response.data);
       })
       .catch((err) => {

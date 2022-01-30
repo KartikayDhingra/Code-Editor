@@ -8,7 +8,7 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { FiCopy } from "react-icons/fi";
 import { MdOutlineSaveAlt } from "react-icons/md";
 import SaveModal from "./SaveModal";
-import AuthContext from "../store/auth-context"
+import AuthContext from "../store/auth-context";
 // import useLocalStorage from "../hooks/useLocalStorage";
 
 const CodeBox = () => {
@@ -134,28 +134,58 @@ const CodeBox = () => {
   };
 
   const saveCodeHandler = () => {
-    if(ctx.userInfo == null){
+    if (ctx.userInfo == null) {
       toast.error("Sign in to save", {
         id: "error123",
       });
-    }
-    else{
+    } else {
       setShowSaveModal(true);
     }
-  }
+  };
 
   const cancelHandler = () => {
     setShowSaveModal(false);
-  }
+  };
 
-  const saveFileHandler = (filename) => {
-    console.log(filename);
+  const saveFileHandler = async (filename) => {
+    if(filename.length === 0) {
+      toast.error("Filename is empty",{
+        id: "error123"
+      });
+    }
+    const body = {
+      userId: ctx.userInfo._id,
+      code: languageCode,
+      filename: filename,
+      language: language,
+    };
+    const response = await axios.post(
+      "http://localhost:5000/save",
+      JSON.stringify(body),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if(response.status === 200) {
+      toast.success("Suucessfully saved",{
+        id: "success123"
+      });
+    }
+    else{
+      toast.error("Could not save file",{
+        id: "error123"
+      });
+    }
     setShowSaveModal(false);
-  }
+  };
 
   return (
     <React.Fragment>
-      {showSaveModal && <SaveModal cancel={cancelHandler} save={saveFileHandler} />}
+      {showSaveModal && (
+        <SaveModal cancel={cancelHandler} save={saveFileHandler} />
+      )}
       <div className="h-full">
         <Toaster />
         <div className="px-12 py-4">
@@ -177,7 +207,10 @@ const CodeBox = () => {
               </select>
             </div>
             <div className="">
-              <button onClick={saveCodeHandler} className="bg-purple-600 flex justify-between items-center font-normal text-sm text-white focus:outline-none rounded px-4 py-1.5">
+              <button
+                onClick={saveCodeHandler}
+                className="bg-purple-600 flex justify-between items-center font-normal text-sm text-white focus:outline-none rounded px-4 py-1.5"
+              >
                 <MdOutlineSaveAlt size={20} className="mr-2" />
                 Save
               </button>
