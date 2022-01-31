@@ -1,10 +1,18 @@
 import React from "react";
 import { FiCode } from "react-icons/fi";
+import { useHistory } from "react-router-dom";
 
-const CodeCard = ({filename}) => {
+const CodeCard = ({filename, id}) => {
+
+    const history = useHistory();
+
+  const openCodeFileHandler = () => {
+    history.push(`/${id}/${filename}`);
+  }  
+
   return (
     <div className="h-48 w-52 bg-white rounded-lg overflow-hidden transform translate-y-0 hover:scale-110 shadow-xl">
-      <button className="w-full h-full">
+      <button onClick={openCodeFileHandler} className="w-full h-full">
         <div className="w-full h-4/5 flex items-center justify-center">
           <FiCode size={48} />
         </div>

@@ -41,4 +41,15 @@ router.post("/", (req,res) => {
 
 })
 
+router.get("/code/:id", (req, res) => {
+    const id = req.params.id;
+    Code.findById(id)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+})
+
 module.exports = router;

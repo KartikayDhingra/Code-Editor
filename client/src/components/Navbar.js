@@ -69,7 +69,7 @@ const Navbar = () => {
                 <RiArrowDropDownLine size={24} />
               </button>
               {dropdownOpen && (
-                <div className="w-40 rounded-lg flex flex-col border-2 border-gray-300 absolute top-12 shadow-xl">
+                <div className="w-40 rounded-lg flex flex-col border-2 z-10 border-gray-300 absolute top-12 shadow-xl">
                   <a
                     href="/"
                     className="px-3 text-sm py-2 flex items-center border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
@@ -77,13 +77,14 @@ const Navbar = () => {
                     <FiUser size={16} className="mr-2" />
                     Profile
                   </a>
-                  <a
-                    href="/saved-codes"
+                  <NavLink
+                    to="/saved-codes"
+                    exact
                     className="px-3 text-sm py-2 flex items-center border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
                   >
                     <FiCode size={16} className="mr-2" />
                     Saved codes
-                  </a>
+                  </NavLink>
                   <a
                     href="/"
                     className="px-3 text-sm py-2 flex items-center border-b border-gray-200 text-gray-800 bg-white hover:bg-gray-100"
