@@ -43,7 +43,7 @@ app.use("/save", codeRouter);
 
 app.use(
   session({
-    secret: "23ewjfj48bddffg893",
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
   })
