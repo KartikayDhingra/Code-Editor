@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/userInfo", { withCredentials: true })
+      .get(`${process.env.REACT_APP_BACKEND_URL}/userInfo`, { withCredentials: true })
       .then((response) => {
         // console.log(response);
         setUserInfo(response.data);

@@ -6,7 +6,7 @@ import FullScreen from "../components/FullScreen";
 const Signup = () => {
 
     const googleSignInHandler = async () => {
-        window.open("http://localhost:5000/auth/google","_self");
+        window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/google`,"_self");
     }
 
   return (
