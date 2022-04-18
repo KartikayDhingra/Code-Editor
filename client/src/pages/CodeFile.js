@@ -14,7 +14,7 @@ const CodeFile = () => {
   },[]);
 
   const getCode = async () => {
-    const codeData = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/save/code/${id}`);
+    const codeData = await axios.get(`https://codethrough.herokuapp.com/save/code/${id}`);
     console.log(codeData);
     setLanguage(codeData.data.language);
     setCode(codeData.data.code);

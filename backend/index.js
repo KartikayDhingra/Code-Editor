@@ -5,17 +5,21 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
-const isLogged = require("./isLogged");
 require("./auth");
 
 const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    origin: "https://code-through-kartikaydhingra.vercel.app", // allow to server to accept request from different origin
     credentials: true
   })
 );
+
+
+app.get("/", (req, res) => {
+  res.send("App is running");
+})
 
 app.get("/run", (req, res) => {
   return res.status(200).json("Hello");
@@ -49,35 +53,46 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", { scope: ["profile", "email"], session: true })
 );
 
 app.get(
   "/auth/google/secrets",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/signup",
+    failureRedirect: "https://code-through-kartikaydhingra.vercel.app/signup",
   }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect("http://localhost:3000");
+    console.log(req.user);
+    res.redirect("https://code-through-kartikaydhingra.vercel.app");
   }
 );
 
+const isLogged = (req,res,next) => {
+  if(req.user){
+      next();
+  }
+  else{
+      res.sendStatus(401);
+  }
+}
+
 app.get("/userInfo", isLogged, (req, res) => {
+  console.log(req.user);
   res.send(req.user);
   // res.redirect("http://localhost:3000");
 });
 
 app.get("/logout", isLogged, (req,res) => {
     req.logout();
-    res.redirect('http://localhost:3000');
+    res.redirect('https://code-through-kartikaydhingra.vercel.app/');
 })
 
-app.listen("5000", (req, res) => {
+const port = process.env.PORT || 5000;
+
+app.listen(port, (req, res) => {
   console.log("Server running at port 5000");
 });

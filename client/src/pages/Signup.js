@@ -6,7 +6,7 @@ import FullScreen from "../components/FullScreen";
 const Signup = () => {
 
     const googleSignInHandler = async () => {
-        window.open(`${process.env.REACT_APP_BACKEND_URL}/auth/google`,"_self");
+        window.open(`https://codethrough.herokuapp.com/auth/google`,"_self");
     }
 
   return (

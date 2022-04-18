@@ -18,7 +18,7 @@ const SavedCodes = () => {
         const body = {
           userId : ctx.userInfo._id
         }
-        const codes = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/save/saved-codes`,
+        const codes = await axios.get(`https://codethrough.herokuapp.com/save/saved-codes`,
           JSON.stringify(body),
           {
             headers: {
