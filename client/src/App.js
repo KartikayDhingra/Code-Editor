@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get(`https://codethrough.herokuapp.com/userInfo`, { withCredentials: true })
+      .get(`http://localhost:5000/userInfo`, { withCredentials: true })
       .then((response) => {
         // console.log(response);
         setUserInfo(response.data);

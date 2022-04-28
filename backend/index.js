@@ -9,9 +9,13 @@ require("./auth");
 
 const app = express();
 
+// "client": "npm run start --prefix client",
+//     "dev": "concurrently \"npm run client\" \"npm run start\"",
+//     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+
 app.use(
   cors({
-    origin: "https://code-through-kartikaydhingra.vercel.app", // allow to server to accept request from different origin
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
     credentials: true
   })
 );
@@ -53,21 +57,23 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"], session: true })
+  passport.authenticate("google", { scope: ["profile", "email"]})
 );
 
 app.get(
   "/auth/google/secrets",
   passport.authenticate("google", {
-    failureRedirect: "https://code-through-kartikaydhingra.vercel.app/signup",
+    failureRedirect: "http://localhost:3000/signup",
   }),
   function (req, res) {
     // Successful authentication, redirect home.
-    console.log(req.user);
-    res.redirect("https://code-through-kartikaydhingra.vercel.app");
+    // console.log(req.user);
+    res.redirect("http://localhost:3000");
   }
 );
 
@@ -81,15 +87,26 @@ const isLogged = (req,res,next) => {
 }
 
 app.get("/userInfo", isLogged, (req, res) => {
-  console.log(req.user);
   res.send(req.user);
   // res.redirect("http://localhost:3000");
 });
 
 app.get("/logout", isLogged, (req,res) => {
     req.logout();
-    res.redirect('https://code-through-kartikaydhingra.vercel.app/');
+    res.redirect('http://localhost:3000');
 })
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
+
+if(process.env.NODE_ENV === 'production'){
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  })
+}
 
 const port = process.env.PORT || 5000;
 

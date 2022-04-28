@@ -5,9 +5,9 @@ import FullScreen from "../components/FullScreen";
 
 const Signup = () => {
 
-    const googleSignInHandler = async () => {
-        window.open(`https://codethrough.herokuapp.com/auth/google`,"_self");
-    }
+    // const googleSignInHandler = async () => {
+    //     window.open(`http://localhost:5000/auth/google`,"_self");
+    // }
 
   return (
     <FullScreen>
@@ -68,10 +68,14 @@ const Signup = () => {
                 <span className="inline-block w-1/3 h-0.5 bg-gray-300 mx-2"></span>
               </div>
               <div className="w-full">
-                <button onClick={googleSignInHandler} className="px-4 py-1 mx-auto rounded-sm text-gray-700 flex items-center justify-center">
+                <a href="http://localhost:5000/auth/google" className="px-4 py-1 mx-auto rounded-sm text-gray-700 flex items-center justify-center">
                   <FcGoogle size={24} className="mr-2" />
                   Sign in with Google
-                </button>
+                </a>
+                {/* <button onClick={googleSignInHandler} className="px-4 py-1 mx-auto rounded-sm text-gray-700 flex items-center justify-center">
+                  <FcGoogle size={24} className="mr-2" />
+                  Sign in with Google
+                </button> */}
               </div>
             </div>
           </div>

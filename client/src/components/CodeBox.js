@@ -84,7 +84,7 @@ const CodeBox = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          "client-secret": "d438df1e8159603a64e49feb18ad9696af7e5274",
+          "client-secret": process.env.HACKEREARTH_CLIENT_SECRET,
         },
       }
     );
@@ -160,7 +160,7 @@ const CodeBox = () => {
       language: language,
     };
     const response = await axios.post(
-      `https://codethrough.herokuapp.com/save`,
+      `http://localhost:5000/save`,
       JSON.stringify(body),
       {
         headers: {
