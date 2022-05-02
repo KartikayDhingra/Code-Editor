@@ -84,7 +84,7 @@ const CodeBox = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          "client-secret": process.env.HACKEREARTH_CLIENT_SECRET,
+          "client-secret": "d438df1e8159603a64e49feb18ad9696af7e5274",
         },
       }
     );
