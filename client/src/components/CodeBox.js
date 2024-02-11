@@ -84,7 +84,7 @@ const CodeBox = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          "client-secret": "d438df1e8159603a64e49feb18ad9696af7e5274",
+          "client-secret": "565b8a7a98fa3bf24ba4b45c82d532c9e6e5e5ca",
         },
       }
     );
